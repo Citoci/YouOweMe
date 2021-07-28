@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_transactions_list">
+
+    <fragment
+        android:id="@+id/navigation_transactions_list"
+        android:name="com.cito.youoweme.TransactionsListFragment"
+        android:label="@string/title_transactions_list"
+        tools:layout="@layout/fragment_transactions_list" />
+
+    <fragment
+        android:id="@+id/navigation_per_contact_balance"
+        android:name="com.cito.youoweme.ContactBalancesListFragment"
+        android:label="@string/title_per_contact_balance"
+        tools:layout="@layout/fragment_contact_balances_list" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.cito.youoweme.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings"/>
+</navigation>
