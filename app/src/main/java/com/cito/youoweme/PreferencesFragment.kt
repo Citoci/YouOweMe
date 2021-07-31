@@ -2,7 +2,6 @@ package com.cito.youoweme
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
-import com.cito.youoweme.R
 
 class PreferencesFragment : PreferenceFragmentCompat() {
 

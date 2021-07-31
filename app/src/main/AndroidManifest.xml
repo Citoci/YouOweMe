@@ -10,12 +10,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YouOweMe">
-
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".ComposeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_compose"
+            android:theme="@style/Theme.YouOweMe.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -24,7 +30,8 @@
         <activity android:name=".AddTransactionActivity" />
         <activity android:name=".AddContactActivity" />
 
-        <receiver android:name=".notifications.RememberNotificationBroadcastReceiver"
+        <receiver
+            android:name=".notifications.RememberNotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
     </application>
