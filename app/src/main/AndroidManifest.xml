@@ -4,36 +4,38 @@
 
     <application
         android:name=".utils.YomApplication"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YouOweMe">
-        <activity
-            android:name=".ComposeActivity"
-            android:exported="true"
-            android:label="@string/title_activity_compose"
-            android:theme="@style/Theme.YouOweMe.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:label="@string/action_login"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".TransactionDetailsActivity" />
-        <activity android:name=".AddTransactionActivity" />
-        <activity android:name=".AddContactActivity" />
+        <activity android:name=".RegistrationActivity"
+            android:label="@string/action_register"/>
+        <activity android:name=".TransactionDetailsActivity"
+            android:label="@string/title_transaction_details"/>
+        <activity android:name=".AddTransactionActivity"
+            android:label="@string/action_add_transaction"/>
+        <activity android:name=".AddContactActivity"
+            android:label="@string/action_add_contact"/>
 
         <receiver
             android:name=".notifications.RememberNotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
+
     </application>
 
 </manifest>

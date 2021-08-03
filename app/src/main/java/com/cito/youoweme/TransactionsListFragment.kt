@@ -26,6 +26,10 @@ class TransactionsListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_transactions_list, container, false)
 
+        view.findViewById<RecyclerView>(R.id.transactions_list).apply {
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
+
         // Set the listener for the floating button
         view.findViewById<FloatingActionButton>(R.id.btn_add_transaction).setOnClickListener {
             startActivityForResult(
@@ -44,7 +48,6 @@ class TransactionsListFragment : Fragment() {
             adapter = TransactionsRecyclerViewAdapter(
                 TransactionsSQLiteDAO.getAll() ?: listOf()
             )
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 

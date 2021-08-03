@@ -10,6 +10,6 @@ data class Contact(
 ): YomData {
 
     override fun toString(): String {
-        return "$surname $name"
+        return "$name $surname"
     }
 }

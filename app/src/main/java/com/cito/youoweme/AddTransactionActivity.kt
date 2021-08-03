@@ -72,6 +72,10 @@ class AddTransactionActivity : AppCompatActivity() {
             Snackbar.make(binding.root, R.string.message_amount_format_error, Snackbar.LENGTH_SHORT).show()
             return false
         }
+        if (binding.edittextAmount.text.toString().toFloat() == 0f) {
+            Snackbar.make(binding.root, R.string.message_amount_format_error, Snackbar.LENGTH_SHORT).show()
+            return false
+        }
         if (binding.spinnerContact.selectedItem == null) {
             Snackbar.make(binding.root, R.string.message_contact_selection_error, Snackbar.LENGTH_SHORT).show()
             return false

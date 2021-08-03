@@ -44,9 +44,9 @@ class TransactionDetailsActivity : AppCompatActivity() {
         }
 
         // Displaying the transaction info
-        binding.textviewAmount.text = "${transaction?.amount}"
-        binding.textviewContact.text = contact.toString()
-        binding.textviewDate.text = "${transaction?.formattedDate}"
+        binding.textviewAmount.text = getString(R.string.format_euros, transaction?.amount)
+        binding.textviewContact.text = getString(if (transaction!!.amount >= 0) R.string.message_he_owes_you else R.string.message_you_owe_him, contact.toString())
+        binding.textviewDate.text = getString(R.string.format_date, Date(transaction!!.timeInMillis))
         binding.textviewTitle.text = "${transaction?.title}"
         binding.textviewDesc.text = "${transaction?.desc}"
 
@@ -74,7 +74,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
             notificationScheduleCalendar[Calendar.YEAR],
             notificationScheduleCalendar.get(Calendar.MONTH),
             notificationScheduleCalendar.get(Calendar.DAY_OF_MONTH)
-        )
+        ).apply { datePicker.minDate = notificationScheduleCalendar.timeInMillis }
 
         // Listeners
         binding.btnNotify.setOnClickListener {
