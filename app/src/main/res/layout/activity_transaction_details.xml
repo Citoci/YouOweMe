@@ -11,7 +11,10 @@
         android:id="@+id/btn_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/red_delete"
         android:text="@string/action_delete"
+        app:icon="@drawable/ic_outline_delete_24"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -22,6 +25,8 @@
         android:layout_height="wrap_content"
         android:enabled="true"
         android:text="@string/action_remember_me"
+        app:icon="@drawable/ic_notifications_black_24dp"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toTopOf="@+id/btn_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

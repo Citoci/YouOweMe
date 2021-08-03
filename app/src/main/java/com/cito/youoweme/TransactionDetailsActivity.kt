@@ -77,15 +77,15 @@ class TransactionDetailsActivity : AppCompatActivity() {
         )
 
         // Listeners
-        binding.btnDelete.setOnClickListener {
-            TransactionsSQLiteDAO.delete(transaction!!)
-            finish()
-        }
-
         binding.btnNotify.setOnClickListener {
 //            Snackbar.make(it, "Not yet implemented", Snackbar.LENGTH_SHORT).show()
 
             datePickerDialog.show()
+        }
+
+        binding.btnDelete.setOnClickListener {
+            TransactionsSQLiteDAO.delete(transaction!!)
+            finish()
         }
 
     }

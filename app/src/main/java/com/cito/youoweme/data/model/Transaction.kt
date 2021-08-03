@@ -5,6 +5,7 @@ import android.os.Parcelable
 import com.cito.youoweme.data.YomData
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.round
 
 data class Transaction(
     override var id: Long? = null,
@@ -44,3 +45,5 @@ data class Transaction(
     }
 
 }
+
+fun Float.euros(value: Float): Float = round(value*100) / 100f
