@@ -17,9 +17,12 @@
     <string name="message_amount_format_error">The Amount is not formatted correctly</string>
     <string name="message_contact_selection_error">The contact is not properly selected</string>
     <string name="message_credit_debt_selection_error">You didn\'t select any of "Credit" or "Debt"</string>
+    <string name="message_hello_login">Hi! You logged in as </string>
     <string name="message_notification_scheduled">Notification scheduled for</string>
+    <string name="message_password_invalid">The Password you inserted not valid</string>
     <string name="message_remember_notification_title">Remember this</string>
     <string name="message_remember_notification_text">Remember this</string>
+    <string name="message_username_not_valid">The username you inserted is not valid</string>
     <string name="message_wrong_credentials">Wrong Credentials</string>
 
     <string name="notification_channel_name_remember">Remember</string>

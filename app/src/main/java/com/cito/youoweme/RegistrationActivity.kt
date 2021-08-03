@@ -3,46 +3,116 @@ package com.cito.youoweme
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
-import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
-import com.cito.youoweme.databinding.ActivityRegistrationBinding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.cito.youoweme.login.UserLoginManager
 import com.cito.youoweme.login.model.User
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityRegistrationBinding
+//    private lateinit var binding: ActivityRegistrationBinding
 
     private lateinit var userLoginManager: UserLoginManager
 
+    private var username: String? = null
+    private var password: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegistrationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+//        binding = ActivityRegistrationBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
 
         userLoginManager = UserLoginManager(this)
 
-        binding.btnRegistrationSubmit.setOnClickListener {
-            if (userLoginManager.register(
-                User(
-                    binding.edittextUsername.text.toString(),
-                    binding.edittextPassword.text.toString().hashCode()
-                )
-            )) {
-//                TransactionsSQLiteDAO.open(this)
-//                ContactsSQLiteDAO.open(this)
+        setContent {
+            RegistrationForm()
+        }
+    }
+
+    private fun checkInput(): Boolean {
+        if (username.isNullOrEmpty()) {
+            Toast.makeText(this, R.string.message_username_not_valid, Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (password.isNullOrEmpty()) {
+            Toast.makeText(this, R.string.message_password_invalid, Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    private fun registerBtnClick(): Boolean {
+        if (!checkInput()) return false
+
+        return userLoginManager.register(
+            User(
+//                binding.edittextUsername.text.toString(),
+//                binding.edittextPassword.text.toString().hashCode()
+                username = username!!,
+                passwordHash = password.hashCode(),
+            )
+        ).also {
+            if (it) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
                 Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show()
             }
-
         }
-
     }
 
-    private fun check(): Boolean {
-        return true
+    @Preview(showBackground = true)
+    @Composable
+    fun RegistrationForm() {
+        Column(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+//                    .fillMaxHeight()
+            ) {
+
+                val usernameInput = remember { mutableStateOf("") }
+                val passwordInput = remember { mutableStateOf("") }
+                OutlinedTextField(
+                    value = usernameInput.value,
+                    onValueChange = { usernameInput.value = it; username = it },
+                    placeholder = { Text(text = "Username") },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = passwordInput.value,
+                    onValueChange = { passwordInput.value = it; password = it },
+                    placeholder = { Text(text = "Password") },
+                    visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                )
+            }
+            Row(modifier = Modifier.fillMaxWidth()) {
+
+                Button(modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                    onClick = {
+                        registerBtnClick()
+                    }) {
+                    Text(text = "Register")
+                }
+            }
+        }
+
     }
 }
