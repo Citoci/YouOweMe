@@ -22,6 +22,7 @@
     <string name="message_password_invalid">The Password you inserted not valid</string>
     <string name="message_remember_notification_title">Remember this</string>
     <string name="message_remember_notification_text">Remember this</string>
+    <string name="message_title_not_inserted">Title is empty. Please, specify one</string>
     <string name="message_username_not_valid">The username you inserted is not valid</string>
     <string name="message_wrong_credentials">Wrong Credentials</string>
 

@@ -80,6 +80,10 @@ class AddTransactionActivity : AppCompatActivity() {
             Snackbar.make(binding.root, R.string.message_credit_debt_selection_error, Snackbar.LENGTH_SHORT).show()
             return false
         }
+        if (binding.edittextTitle.text.isNullOrEmpty()) {
+            Snackbar.make(binding.root, R.string.message_title_not_inserted, Snackbar.LENGTH_SHORT).show()
+            return false
+        }
         return true
     }
 
