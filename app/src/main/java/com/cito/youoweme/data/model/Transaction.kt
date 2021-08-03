@@ -46,4 +46,4 @@ data class Transaction(
 
 }
 
-fun Float.euros(value: Float): Float = round(value*100) / 100f
+fun Float.euros(): Float = round(this*100) / 100f

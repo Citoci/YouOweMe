@@ -47,6 +47,8 @@
     <string name="word_transaction">Transaction</string>
     <string name="word_username" translatable="false">Username</string>
 
+    <string name="format_euros" translatable="false">€%.2f</string>
+
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

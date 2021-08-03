@@ -1,17 +1,20 @@
 package com.cito.youoweme
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cito.youoweme.data.model.Transaction
+import com.cito.youoweme.data.model.euros
+import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.databinding.TransactionEntryBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,6 +44,7 @@ class TransactionsListFragment : Fragment() {
             adapter = TransactionsRecyclerViewAdapter(
                 TransactionsSQLiteDAO.getAll() ?: listOf()
             )
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 
@@ -57,7 +61,7 @@ class TransactionsListFragment : Fragment() {
         }
     }
 
-    inner class TransactionsRecyclerViewAdapter(private val values: List<Transaction>) :
+    inner class TransactionsRecyclerViewAdapter(private val transactions: List<Transaction>) :
         RecyclerView.Adapter<TransactionsRecyclerViewAdapter.TransactionViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
@@ -69,26 +73,41 @@ class TransactionsListFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-            val item = values[position]
 
-            holder.contentView.text = item.toString()
+            // creating an hashmap od the contacts, to get their names efficiently later
+            val contactNames = ContactsSQLiteDAO.getAll()?.associate { Pair(it.id, it) }
 
-            holder.itemView.setOnClickListener { view ->
-//            Toast.makeText(view.context, item.toString(), Toast.LENGTH_SHORT).show()
-                view.context.startActivity(
-                    Intent(view.context, TransactionDetailsActivity::class.java).also {
-                        it.putExtra(TransactionDetailsActivity.TRANSACTION_ID_EXTRA, item.id)
+            with(holder) {
+                transactions[position].let { t ->
+                    amountView.text = getString(R.string.format_euros, t.amount.euros())
+                    titleView.text = t.title
+                    contactView.text = contactNames?.get(t.contactId)?.toString() ?: "error"// t.contactId?.let { ContactsSQLiteDAO.getById(it)?.toString() } ?: "error"
+                    dateView.text = t.formattedDate
+
+                    amountView.setTextColor(if (t.amount >= 0) resources.getColor(R.color.credit) else Color.RED)
+
+                    itemView.setOnClickListener { view ->
+                        view.context.startActivity(
+                            Intent(view.context, TransactionDetailsActivity::class.java).apply {
+                                putExtra(TransactionDetailsActivity.TRANSACTION_ID_EXTRA, t.id)
+                            }
+                        )
                     }
-                )
-
+                }
             }
         }
 
-        override fun getItemCount(): Int = values.size
+        override fun getItemCount(): Int = transactions.size
 
         inner class TransactionViewHolder(binding: TransactionEntryBinding) :
             RecyclerView.ViewHolder(binding.root) {
+
             val contentView: TextView = binding.textviewTransactionEntry
+            val amountView: TextView = binding.txtAmount
+            val titleView: TextView = binding.txtTitle
+            val dateView: TextView = binding.txtDate
+            val contactView: TextView = binding.txtContact
+
         }
 
     }
