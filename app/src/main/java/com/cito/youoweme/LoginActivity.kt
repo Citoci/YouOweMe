@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<TextView>(R.id.lbl_goto_registration).setOnClickListener {
+        findViewById<TextView>(R.id.btn_goto_registration).setOnClickListener {
             startActivity(Intent(this, RegistrationActivity::class.java))
         }
 
