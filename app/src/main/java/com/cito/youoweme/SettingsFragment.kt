@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.login.UserLoginManager
+import com.cito.youoweme.login.model.User
 
 class SettingsFragment : Fragment() {
 
@@ -20,23 +21,26 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val viewToReturn = inflater.inflate(R.layout.fragment_settings, container, false)
+        val fragView = inflater.inflate(
+            if (UserLoginManager.loggedUser != null) R.layout.fragment_settings else R.layout.fragment_settings_guest,
+            container, false
+        )
 
-        with (viewToReturn.findViewById<TextView>(R.id.profile_username_text)) {
-            append(" \"" + (UserLoginManager.loggedUser?.username ?: "guest") + "\"")
+        with (fragView.findViewById<TextView>(R.id.profile_username_text)) {
+            this?.append(" \"" + (UserLoginManager.loggedUser?.username ?: "guest") + "\"")
         }
 
-        with (viewToReturn.findViewById<Button>(R.id.btn_logout)) {
-            setOnClickListener {
+        with (fragView.findViewById<Button>(R.id.btn_logout)) {
+            this?.setOnClickListener {
                 UserLoginManager(requireContext()).logout()
                 TransactionsSQLiteDAO.close()
                 ContactsSQLiteDAO.close()
                 activity?.finish()
-                startActivity(Intent(viewToReturn.context, LoginActivity::class.java))
+                startActivity(Intent(fragView.context, LoginActivity::class.java))
             }
         }
 
-        return viewToReturn
+        return fragView
     }
 
 }

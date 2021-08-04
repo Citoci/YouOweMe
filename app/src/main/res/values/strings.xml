@@ -27,6 +27,7 @@
     <string name="message_username_not_valid">The username you inserted is not valid</string>
     <string name="message_wrong_credentials">Wrong Credentials</string>
     <string name="message_you_owe_him">You owe the amount to \"%s\"</string>
+    <string name="message_you_are_not_logged">You are not logged in!\nLog in to unlock all app features</string>
 
     <string name="notification_channel_name_remember">Remember</string>
 

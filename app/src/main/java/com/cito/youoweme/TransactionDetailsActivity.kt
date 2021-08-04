@@ -12,6 +12,7 @@ import com.cito.youoweme.data.model.Transaction
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.databinding.ActivityTransactionDetailsBinding
+import com.cito.youoweme.login.UserLoginManager
 import com.cito.youoweme.notifications.RememberNotificationBroadcastReceiver
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
@@ -49,6 +50,10 @@ class TransactionDetailsActivity : AppCompatActivity() {
         binding.textviewDate.text = getString(R.string.format_date, Date(transaction!!.timeInMillis))
         binding.textviewTitle.text = "${transaction?.title}"
         binding.textviewDesc.text = "${transaction?.desc}"
+
+        if (UserLoginManager.loggedUser == null) {
+            binding.btnNotify.isEnabled = false
+        }
 
         // Instantiating the Pickers
         val timePickerDialog = TimePickerDialog(
