@@ -13,8 +13,8 @@
 
     <fragment
         android:id="@+id/navigation_per_contact_balance"
-        android:name="com.cito.youoweme.ContactBalancesListFragment"
-        android:label="@string/title_per_contact_balance"
+        android:name="com.cito.youoweme.ContactsBalancesListFragment"
+        android:label="@string/title_contacts_balances"
         tools:layout="@layout/fragment_contact_balances_list" />
 
     <fragment

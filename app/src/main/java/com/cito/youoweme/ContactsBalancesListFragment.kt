@@ -1,36 +1,35 @@
 package com.cito.youoweme
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.cito.youoweme.data.model.Contact
 import com.cito.youoweme.data.model.Transaction
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
-import com.cito.youoweme.databinding.ContactBalanceEntryBinding
 import com.cito.youoweme.ui.theme.YouOweMeTheme
 
 // NOW WITH JETPACK COMPOSE!!
-class ContactBalancesListFragment : Fragment() {
+class ContactsBalancesListFragment : Fragment() {
 
     private var contacts = listOf<Contact>()
 
@@ -63,6 +62,7 @@ class ContactBalancesListFragment : Fragment() {
                 key = { it.id ?: -1 }
             ) {
                 ContactBalance(it)
+                Divider(color = Color.LightGray)
             }
         }
     }
@@ -70,17 +70,23 @@ class ContactBalancesListFragment : Fragment() {
     @Preview(showBackground = true)
     @Composable
     fun ContactBalance(contact: Contact = Contact(null, "Mario", "Rossi", 5f)) {
-
         Row(modifier = Modifier
             .fillMaxWidth()
-            .clickable { }
-            .padding(8.dp)) {
-            Text(text = contact.name ?: "")
-            Text(text = contact.surname ?: "",
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp))
-            Text(text = "" + (contact.balance ?: 0))
+            .clickable {
+                startActivity(Intent(context, ContactBalanceActivity::class.java).apply {
+                    putExtra(ContactBalanceActivity.CONTACT_ID_EXTRA, contact.id)
+                    putExtra(ContactBalanceActivity.CONTACT_BALANCE_EXTRA, contact.balance ?: 0f)
+                })
+            }
+            .padding(16.dp)) {
+            Text(
+                text = contact.toString(), fontSize = 24.sp,
+                modifier = Modifier.weight(1f)
+            )
+            Text(
+                text = stringResource(R.string.format_euros, contact.balance ?: 0),
+                fontSize = 24.sp
+            )
         }
     }
 

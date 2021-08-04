@@ -9,33 +9,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YouOweMe">
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".LoginActivity"
-            android:label="@string/action_login"
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationActivity"
-            android:label="@string/action_register"/>
-        <activity android:name=".TransactionDetailsActivity"
-            android:label="@string/title_transaction_details"/>
-        <activity android:name=".AddTransactionActivity"
-            android:label="@string/action_add_transaction"/>
-        <activity android:name=".AddContactActivity"
-            android:label="@string/action_add_contact"/>
+        <activity
+            android:name=".RegistrationActivity"
+            android:label="@string/action_register" />
+        <activity
+            android:name=".TransactionDetailsActivity"
+            android:label="@string/title_transaction_details" />
+        <activity
+            android:name=".ContactBalanceActivity"
+            android:label="@string/title_contact_balance"
+            android:theme="@style/Theme.YouOweMe.NoActionBar"/>
+        <activity
+            android:name=".AddTransactionActivity"
+            android:label="@string/action_add_transaction" />
+        <activity
+            android:name=".AddContactActivity"
+            android:label="@string/action_add_contact" />
 
         <receiver
             android:name=".notifications.RememberNotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
-
     </application>
 
 </manifest>

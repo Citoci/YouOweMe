@@ -5,12 +5,14 @@
       <map>
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_add_contact.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_add_transaction.xml" value="0.2601010101010101" />
+        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_contact_balance.xml" value="0.30625" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_login.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_transaction_details.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/fragment_settings.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/fragment_transactions_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/line_settings_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/transaction_entry.xml" value="0.2986842105263158" />
+        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/xml/preferences_example.xml" value="0.3333333333333333" />
       </map>
     </option>

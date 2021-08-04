@@ -64,7 +64,7 @@ class TransactionsListFragment : Fragment() {
         }
     }
 
-    inner class TransactionsRecyclerViewAdapter(private val transactions: List<Transaction>) :
+    class TransactionsRecyclerViewAdapter(private val transactions: List<Transaction>) :
         RecyclerView.Adapter<TransactionsRecyclerViewAdapter.TransactionViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
@@ -76,18 +76,17 @@ class TransactionsListFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-
             // creating an hashmap od the contacts, to get their names efficiently later
             val contactNames = ContactsSQLiteDAO.getAll()?.associate { Pair(it.id, it) }
 
             with(holder) {
                 transactions[position].let { t ->
-                    amountView.text = getString(R.string.format_euros, t.amount.euros())
+                    amountView.text = itemView.resources.getString(R.string.format_euros, t.amount.euros())
                     titleView.text = t.title
                     contactView.text = contactNames?.get(t.contactId)?.toString() ?: "error"// t.contactId?.let { ContactsSQLiteDAO.getById(it)?.toString() } ?: "error"
                     dateView.text = t.formattedDate
 
-                    amountView.setTextColor(if (t.amount >= 0) resources.getColor(R.color.credit) else Color.RED)
+                    amountView.setTextColor(if (t.amount >= 0) itemView.resources.getColor(R.color.credit) else Color.RED)
 
                     itemView.setOnClickListener { view ->
                         view.context.startActivity(
@@ -105,7 +104,7 @@ class TransactionsListFragment : Fragment() {
         inner class TransactionViewHolder(binding: TransactionEntryBinding) :
             RecyclerView.ViewHolder(binding.root) {
 
-            val contentView: TextView = binding.textviewTransactionEntry
+//            val contentView: TextView = binding.textviewTransactionEntry
             val amountView: TextView = binding.txtAmount
             val titleView: TextView = binding.txtTitle
             val dateView: TextView = binding.txtDate
