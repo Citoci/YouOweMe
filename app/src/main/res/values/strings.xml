@@ -21,13 +21,14 @@
     <string name="message_he_owes_you">\"%s\" owes you the amount</string>
     <string name="message_notification_scheduled">Notification scheduled for</string>
     <string name="message_password_invalid">The Password you inserted not valid</string>
+    <string name="message_password_confirmation_not_match">The password confirm field must match the first password</string>
     <string name="message_remember_notification_title">Remember this</string>
     <string name="message_remember_notification_text">Remember this</string>
     <string name="message_title_not_inserted">Title is empty. Please, specify one</string>
     <string name="message_username_not_valid">The username you inserted is not valid</string>
     <string name="message_wrong_credentials">Wrong Credentials</string>
     <string name="message_you_owe_him">You owe the amount to \"%s\"</string>
-    <string name="message_you_are_not_logged">You are not logged in!\nLog in to unlock all app features</string>
+    <string name="message_you_are_not_logged">You are not logged in!\nSome features are not available</string>
 
     <string name="notification_channel_name_remember">Remember</string>
 
@@ -48,6 +49,7 @@
     <string name="word_description">Description</string>
     <string name="word_name">Name</string>
     <string name="word_password" translatable="false">Password</string>
+    <string name="word_password_confirm">Password Confirm</string>
     <string name="word_surname">Surname</string>
     <string name="word_title">Title</string>
     <string name="word_transaction">Transaction</string>
