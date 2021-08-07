@@ -11,7 +11,7 @@ import com.cito.youoweme.data.sql_database.utils.YomDBNames
 import com.cito.youoweme.data.sql_database.utils.YomSQLiteOpenHelper
 
 
-object ContactsSQLiteDAO : YomDAO<Contact> {
+object ContactsSQLiteDAO : YomDAO<Contact, Long> {
 
     private var yomSQLiteOpenHelper : SQLiteOpenHelper? = null
     private val db : SQLiteDatabase?

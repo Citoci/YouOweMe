@@ -2,7 +2,7 @@ package com.cito.youoweme.data
 
 import android.content.Context
 
-interface YomDAO<DataType> {
+interface YomDAO<DataType, IDType> {
     fun open(context: Context?)
     fun close()
 
@@ -10,5 +10,5 @@ interface YomDAO<DataType> {
     fun delete(value: DataType): Boolean
 
     fun getAll(): List<DataType>?
-    fun getById(id: Long): DataType?
+    fun getById(id: IDType): DataType?
 }

@@ -3,8 +3,8 @@ package com.cito.youoweme.data.sql_database.utils
 import com.cito.youoweme.login.UserLoginManager
 
 object YomDBNames {
-    val DATABASE_NAME
-        get() = "yom_db_" + (UserLoginManager.loggedUser?.username ?: "guest")
+    const val DATABASE_NAME = "yom_db"
+//        get() = "yom_db_" + (UserLoginManager.loggedUser?.username ?: "guest")
 
     const val TRANSACTIONS_TABLE = "transactions"
     const val TRANSACTIONS_COL_ID = "_id"
@@ -27,15 +27,16 @@ object YomDBNames {
     const val CONTACTS_COL_ID = "_id"
     const val CONTACTS_COL_NAME = "name"
     const val CONTACTS_COL_SURNAME = "surname"
+    const val CONTACTS_COL_USERNAME = "username_ref"
 
-    val CONTACTS_COLS_LIST = arrayOf(CONTACTS_COL_ID, CONTACTS_COL_NAME, CONTACTS_COL_SURNAME)
+    val CONTACTS_COLS_LIST = arrayOf(CONTACTS_COL_ID, CONTACTS_COL_NAME, CONTACTS_COL_SURNAME, CONTACTS_COL_USERNAME)
 
 //    val USERS_DATABASE_NAME = "yom_users_db"
-//
-//    const val USERS_TABLE = "users"
-//    const val USERS_COL_USERNAME = "username"
-//    const val USERS_COL_PASSWD_HASH = "password_hash"
-//
-//    val USERS_COLS_LIST = arrayOf(USERS_COL_USERNAME, USERS_COL_PASSWD_HASH)
+
+    const val USERS_TABLE = "users"
+    const val USERS_COL_USERNAME = "username"
+    const val USERS_COL_PASSWD_HASH = "password_hash"
+
+    val USERS_COLS_LIST = arrayOf(USERS_COL_USERNAME, USERS_COL_PASSWD_HASH)
 
 }

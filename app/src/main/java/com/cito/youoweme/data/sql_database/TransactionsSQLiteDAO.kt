@@ -12,7 +12,7 @@ import com.cito.youoweme.data.sql_database.utils.YomDBNames
 import com.cito.youoweme.data.sql_database.utils.YomSQLiteOpenHelper
 
 
-object TransactionsSQLiteDAO : YomDAO<Transaction> {
+object TransactionsSQLiteDAO : YomDAO<Transaction, Long> {
 
     private var yomSQLiteOpenHelper : SQLiteOpenHelper? = null
     private val db : SQLiteDatabase?

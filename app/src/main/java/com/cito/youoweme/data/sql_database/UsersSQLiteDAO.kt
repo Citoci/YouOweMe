@@ -1,14 +1,24 @@
 package com.cito.youoweme.data.sql_database
 
-/*
-object UsersSQLiteDAO : YomDAO<User> {
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import com.cito.youoweme.data.YomDAO
+import com.cito.youoweme.data.sql_database.utils.YomDBNames
+import com.cito.youoweme.data.sql_database.utils.YomSQLiteOpenHelper
+import com.cito.youoweme.login.model.User
+
+
+object UsersSQLiteDAO : YomDAO<User, String> {
 
     private var usersSQLiteOpenHelper : SQLiteOpenHelper? = null
     private val db : SQLiteDatabase?
         get() = usersSQLiteOpenHelper?.writableDatabase
 
     override fun open(context: Context?) {
-        usersSQLiteOpenHelper = usersSQLiteOpenHelper ?: UsersSQLiteOpenHelper(context)
+        usersSQLiteOpenHelper = usersSQLiteOpenHelper ?: YomSQLiteOpenHelper(context)
     }
 
     override fun close() {
@@ -53,11 +63,11 @@ object UsersSQLiteDAO : YomDAO<User> {
         return users
     }
 
-    fun getByUsername(username: String): User? {
+    override fun getById(id: String): User? {
         val cursor = db?.query(
             YomDBNames.USERS_TABLE,
             YomDBNames.USERS_COLS_LIST,
-            "${YomDBNames.USERS_COL_USERNAME} = $username",
+            "${YomDBNames.USERS_COL_USERNAME} = $id",
             null, null, null, null
         ) ?: return null
 
@@ -82,8 +92,8 @@ object UsersSQLiteDAO : YomDAO<User> {
         return User(getString(0), getInt(1))
     }
 
-    override fun getById(id: Long): User? = null
+//    fun getById(id: Long): User? = null
 }
 
 
- */
+
