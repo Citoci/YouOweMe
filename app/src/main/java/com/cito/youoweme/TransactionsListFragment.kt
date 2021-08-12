@@ -17,6 +17,7 @@ import com.cito.youoweme.data.model.euros
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.databinding.TransactionEntryBinding
+import com.cito.youoweme.login.UserLoginManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TransactionsListFragment : Fragment() {
@@ -46,9 +47,13 @@ class TransactionsListFragment : Fragment() {
         activity?.findViewById<RecyclerView>(R.id.transactions_list)?.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = TransactionsRecyclerViewAdapter(
-                TransactionsSQLiteDAO.getAll() ?: listOf()
+                TransactionsSQLiteDAO.getAll()?.filter { it.isOfLoggedUser() } ?: listOf()
             )
         }
+    }
+
+    private fun Transaction.isOfLoggedUser(): Boolean {
+        return (ContactsSQLiteDAO.getById(contactId?:return false)?.usernameRef == UserLoginManager.loggedUser?.username)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

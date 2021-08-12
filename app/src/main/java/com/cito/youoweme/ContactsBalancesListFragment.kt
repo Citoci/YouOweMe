@@ -26,6 +26,7 @@ import com.cito.youoweme.data.model.Contact
 import com.cito.youoweme.data.model.Transaction
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
+import com.cito.youoweme.login.UserLoginManager
 import com.cito.youoweme.ui.theme.YouOweMeTheme
 
 // NOW WITH JETPACK COMPOSE!!
@@ -107,7 +108,7 @@ class ContactsBalancesListFragment : Fragment() {
 //    }
 
     private fun updateContacts() {
-        contacts = ContactsSQLiteDAO.getAll()?.apply {
+        contacts = ContactsSQLiteDAO.getAll()?.filter { it.usernameRef == UserLoginManager.loggedUsername }?.apply {
             TransactionsSQLiteDAO.getAll()?.let { transactions ->
                 this.forEach { contact ->
                     contact.calculateBalance(transactions)

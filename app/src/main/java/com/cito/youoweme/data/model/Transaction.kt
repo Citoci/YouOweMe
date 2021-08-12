@@ -2,19 +2,18 @@ package com.cito.youoweme.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.cito.youoweme.data.YomData
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.round
 
 data class Transaction(
-    override var id: Long? = null,
+    var id: Long? = null,
     var amount: Float,
     var contactId: Long? = null,
     var timeInMillis: Long = Calendar.getInstance().timeInMillis,
     var title: String? = null,
     var desc: String? = null,
-) : YomData, Parcelable {
+) : Parcelable {
 
     val formattedDate
         get() = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date(timeInMillis))

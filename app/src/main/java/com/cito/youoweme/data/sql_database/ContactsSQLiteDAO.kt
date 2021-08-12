@@ -84,12 +84,19 @@ object ContactsSQLiteDAO : YomDAO<Contact, Long> {
 
     private fun Contact.toContentValues(): ContentValues {
         val values = ContentValues()
+        id?.let { values.put(YomDBNames.CONTACTS_COL_ID, it) }
         values.put(YomDBNames.CONTACTS_COL_NAME, name)
         values.put(YomDBNames.CONTACTS_COL_SURNAME, surname)
+        values.put(YomDBNames.CONTACTS_COL_USERNAME, usernameRef)
         return values
     }
 
     private fun Cursor.toContact(): Contact {
-        return Contact(getLong(0), getString(1), getString(2))
+        return Contact(
+            id = getLong(0),
+            name = getString(1),
+            surname = getString(2),
+            usernameRef = getString(3)
+        )
     }
 }

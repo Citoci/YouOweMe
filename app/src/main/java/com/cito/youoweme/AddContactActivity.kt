@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import com.cito.youoweme.data.model.Contact
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
+import com.cito.youoweme.login.UserLoginManager
 import java.util.*
 
 class AddContactActivity : AppCompatActivity() {
@@ -19,6 +20,7 @@ class AddContactActivity : AppCompatActivity() {
             ContactsSQLiteDAO.insert(Contact(
                 name = findViewById<EditText>(R.id.edittext_contact_name).text.toString(),
                 surname = findViewById<EditText>(R.id.edittext_contact_surname).text.toString(),
+                usernameRef = UserLoginManager.loggedUsername
             ))
             finish()
         }

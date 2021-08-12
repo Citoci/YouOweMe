@@ -12,6 +12,7 @@ import com.cito.youoweme.data.model.Transaction
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.databinding.ActivityAddTransactionBinding
+import com.cito.youoweme.login.UserLoginManager
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -54,7 +55,7 @@ class AddTransactionActivity : AppCompatActivity() {
     }
 
     private fun fillContactSpinner() {
-        val contactsList = ContactsSQLiteDAO.getAll() ?: listOf()
+        val contactsList = ContactsSQLiteDAO.getAll()?.filter { it.usernameRef == UserLoginManager.loggedUsername } ?: listOf()
         if (contactsList.isEmpty())
             binding.spinnerContact.isEnabled = false
         else {
