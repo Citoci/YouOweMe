@@ -67,8 +67,8 @@ object UsersSQLiteDAO : YomDAO<User, String> {
         val cursor = db?.query(
             YomDBNames.USERS_TABLE,
             YomDBNames.USERS_COLS_LIST,
-            "${YomDBNames.USERS_COL_USERNAME} = $id",
-            null, null, null, null
+            "${YomDBNames.USERS_COL_USERNAME} = ?",
+            arrayOf(id), null, null, null
         ) ?: return null
 
         var userToReturn: User? = null

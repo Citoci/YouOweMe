@@ -10,20 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.login.UserLoginManager
+import com.cito.youoweme.login.model.User
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var usersLoginManager: UserLoginManager
+//    private lateinit var usersLoginManager: UserLoginManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        usersLoginManager = UserLoginManager(this).apply {
-            loadLogin()
-        }
 
         if (UserLoginManager.loggedUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
+
+        val usersLoginManager = UserLoginManager(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

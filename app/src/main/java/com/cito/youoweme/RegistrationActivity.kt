@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,9 +27,9 @@ class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var userLoginManager: UserLoginManager
 
-    private var username: String? = null
-    private var password: String? = null
-    private var passwordConfirm: String? = null
+    private var usernameIn: String? = null
+    private var passwordIn: String? = null
+    private var passwordConfirmIn: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,15 +46,15 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun checkInput(): Boolean {
-        if (username.isNullOrEmpty()) {
+        if (usernameIn.isNullOrEmpty()) {
             Toast.makeText(this, R.string.message_username_not_valid, Toast.LENGTH_SHORT).show()
             return false
         }
-        if (password.isNullOrEmpty()) {
+        if (passwordIn.isNullOrEmpty()) {
             Toast.makeText(this, R.string.message_password_invalid, Toast.LENGTH_SHORT).show()
             return false
         }
-        if (passwordConfirm.isNullOrEmpty() || passwordConfirm != password) {
+        if (passwordConfirmIn.isNullOrEmpty() || passwordConfirmIn != passwordIn) {
             Toast.makeText(this, R.string.message_password_confirmation_not_match, Toast.LENGTH_SHORT).show()
             return false
         }
@@ -69,11 +68,12 @@ class RegistrationActivity : AppCompatActivity() {
             User(
 //                binding.edittextUsername.text.toString(),
 //                binding.edittextPassword.text.toString().hashCode()
-                username = username!!,
-                passwordHash = password.hashCode(),
+                username = usernameIn!!,
+                passwordHash = passwordIn.hashCode(),
             )
         ).also {
             if (it) {
+                userLoginManager.login(usernameIn!!, passwordIn.hashCode())
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
@@ -102,14 +102,14 @@ class RegistrationActivity : AppCompatActivity() {
 
                     OutlinedTextField(
                         value = usernameInput.value,
-                        onValueChange = { usernameInput.value = it; username = it },
+                        onValueChange = { usernameInput.value = it; this@RegistrationActivity.usernameIn = it },
                         label = { Text(text = "Username") },
                         singleLine = true,
                         modifier = modifier,
                     )
                     OutlinedTextField(
                         value = passwordInput.value,
-                        onValueChange = { passwordInput.value = it; password = it },
+                        onValueChange = { passwordInput.value = it; passwordIn = it },
                         label = { Text(text = stringResource(R.string.word_password)) },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
@@ -117,7 +117,7 @@ class RegistrationActivity : AppCompatActivity() {
                     )
                     OutlinedTextField(
                         value = passwordConfirmInput.value,
-                        onValueChange = { passwordConfirmInput.value = it; passwordConfirm = it },
+                        onValueChange = { passwordConfirmInput.value = it; passwordConfirmIn = it },
                         label = { Text(text = stringResource(R.string.word_password_confirm))},
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),

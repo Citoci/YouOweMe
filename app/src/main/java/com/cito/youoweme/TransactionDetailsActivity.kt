@@ -3,11 +3,14 @@ package com.cito.youoweme
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.cito.youoweme.data.model.Contact
 import com.cito.youoweme.data.model.Transaction
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
@@ -23,20 +26,24 @@ class TransactionDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTransactionDetailsBinding
 
     private var transaction: Transaction? = null
+    private var contact: Contact? = null
     private var notificationManager: NotificationManager? = null
 
     // Notification Scheduling Properties
-    var notificationScheduleCalendar: Calendar = Calendar.getInstance()
+    var notifScheduleCalendar: Calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTransactionDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        TransactionsSQLiteDAO.open(this)
+        ContactsSQLiteDAO.open(this)
+
         // Getting the transaction info
         transaction =
             intent.extras?.getLong(TRANSACTION_ID_EXTRA)?.let { TransactionsSQLiteDAO.getById(it) }
-        val contact = transaction?.contactId?.let { ContactsSQLiteDAO.getById(it) }
+        contact = transaction?.contactId?.let { ContactsSQLiteDAO.getById(it) }
 
         if (transaction == null) {
             Log.e(TransactionDetailsActivity::class.simpleName, "transaction not found")
@@ -59,33 +66,32 @@ class TransactionDetailsActivity : AppCompatActivity() {
         val timePickerDialog = TimePickerDialog(
             this,
             { _: TimePicker?, h: Int, m: Int ->
-                notificationScheduleCalendar.set(Calendar.HOUR, h)
-                notificationScheduleCalendar.set(Calendar.MINUTE, m)
-                notificationScheduleCalendar.set(Calendar.SECOND, 0)
+                notifScheduleCalendar.set(Calendar.HOUR, h)
+                notifScheduleCalendar.set(Calendar.MINUTE, m)
+                notifScheduleCalendar.set(Calendar.SECOND, 0)
                 scheduleNotification()
             },
-            notificationScheduleCalendar.get(Calendar.HOUR),
-            notificationScheduleCalendar.get(Calendar.MINUTE),
+            notifScheduleCalendar.get(Calendar.HOUR),
+            notifScheduleCalendar.get(Calendar.MINUTE),
             true
         )
         val datePickerDialog = DatePickerDialog(
             this,
             { _: DatePicker?, y: Int, m: Int, d: Int ->
-                notificationScheduleCalendar.set(Calendar.YEAR, y)
-                notificationScheduleCalendar.set(Calendar.MONTH, m)
-                notificationScheduleCalendar.set(Calendar.DAY_OF_MONTH, d)
+                notifScheduleCalendar.set(Calendar.YEAR, y)
+                notifScheduleCalendar.set(Calendar.MONTH, m)
+                notifScheduleCalendar.set(Calendar.DAY_OF_MONTH, d)
                 timePickerDialog.show()
             },
-            notificationScheduleCalendar[Calendar.YEAR],
-            notificationScheduleCalendar.get(Calendar.MONTH),
-            notificationScheduleCalendar.get(Calendar.DAY_OF_MONTH)
-        ).apply { datePicker.minDate = notificationScheduleCalendar.timeInMillis }
+            notifScheduleCalendar[Calendar.YEAR],
+            notifScheduleCalendar.get(Calendar.MONTH),
+            notifScheduleCalendar.get(Calendar.DAY_OF_MONTH)
+        ).apply { datePicker.minDate = notifScheduleCalendar.timeInMillis }
 
         // Listeners
         binding.btnNotify.setOnClickListener {
 //            Snackbar.make(it, "Not yet implemented", Snackbar.LENGTH_SHORT).show()
-
-            datePickerDialog.show()
+            scheduleNotification() // datePickerDialog.show()
         }
 
         binding.btnDelete.setOnClickListener {
@@ -98,20 +104,31 @@ class TransactionDetailsActivity : AppCompatActivity() {
     private fun scheduleNotification() {
         (getSystemService(Context.ALARM_SERVICE) as AlarmManager).set(
             AlarmManager.RTC_WAKEUP,
-            notificationScheduleCalendar.timeInMillis,
+//            notifScheduleCalendar.timeInMillis,
+            Calendar.getInstance().timeInMillis + 5*1000,
             PendingIntent.getBroadcast(
                 this,
-                PENDING_INTENT_REQ_CODE,
+                "${UserLoginManager.loggedUsername}:${transaction!!.id}".hashCode(),
                 Intent(this, RememberNotificationBroadcastReceiver::class.java).apply {
                     putExtra(RememberNotificationBroadcastReceiver.NOTIFICATION_ID_EXTRA, transaction?.id)
-                    putExtra(RememberNotificationBroadcastReceiver.NOTIFICATION_TITLE_EXTRA, "title")
-                    putExtra(RememberNotificationBroadcastReceiver.NOTIFICATION_TEXT_EXTRA, "text")
+                    putExtra(RememberNotificationBroadcastReceiver.NOTIFICATION_TITLE_EXTRA,
+                        "${transaction?.title}: ${getString(R.string.format_euros, transaction?.amount)}"
+                    )
+                    putExtra(RememberNotificationBroadcastReceiver.NOTIFICATION_TEXT_EXTRA,
+                        getString(
+                            if (transaction!!.amount >= 0) R.string.message_he_owes_you else R.string.message_you_owe_him,
+                            contact.toString()
+                        )
+                    )
                 },
-                0
+                (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    PendingIntent.FLAG_IMMUTABLE
+                else 0) or
+                PendingIntent.FLAG_ONE_SHOT
             )
         )
 
-        (getString(R.string.message_notification_scheduled) + " ${notificationScheduleCalendar.time}").let {
+        (getString(R.string.message_notification_scheduled) + " ${notifScheduleCalendar.time}").let {
 //            Log.d(TransactionDetailsActivity::class.simpleName, it)
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
@@ -119,7 +136,6 @@ class TransactionDetailsActivity : AppCompatActivity() {
 
     companion object {
         const val TRANSACTION_ID_EXTRA =
-            "com.cito.youoweme.TransactionDetailsActivity.TRANSACTION_EXTRA_KEY"
-        const val PENDING_INTENT_REQ_CODE = 11
+            "com.cito.youoweme.TransactionDetailsActivity.TRANSACTION_ID_EXTRA"
     }
 }
