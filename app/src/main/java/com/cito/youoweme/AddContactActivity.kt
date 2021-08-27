@@ -15,10 +15,17 @@ import androidx.loader.content.Loader
 import com.cito.youoweme.data.model.Contact
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.login.UserLoginManager
+import com.google.android.material.snackbar.Snackbar
 
 class AddContactActivity : AppCompatActivity(), ImportContactDialog.ContactSelectorListener, LoaderManager.LoaderCallbacks<Cursor>  {
 
     private val providedContacts = arrayListOf<Contact>()
+
+    // UI Elements
+    private lateinit var nameEditText: EditText
+    private lateinit var surnameEditText: EditText
+    private lateinit var saveBtn: Button
+    private lateinit var importBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,35 +33,50 @@ class AddContactActivity : AppCompatActivity(), ImportContactDialog.ContactSelec
 
         LoaderManager.getInstance(this).initLoader(0, null, this)
 
-        findViewById<Button>(R.id.btn_save_new_contact).setOnClickListener {
+        nameEditText = findViewById(R.id.edittext_contact_name)
+        surnameEditText = findViewById(R.id.edittext_contact_surname)
+        saveBtn = findViewById(R.id.btn_save_new_contact)
+        importBtn = findViewById(R.id.btn_import_contact)
+
+        saveBtn.setOnClickListener {
             addContact()
         }
 
-        findViewById<Button>(R.id.btn_import_contact).setOnClickListener {
-            ImportContactDialog(providedContacts.map { "$it" }.toTypedArray()).show(supportFragmentManager, "")
+        importBtn.apply {
+            isEnabled = UserLoginManager.isLogged
+            setOnClickListener {
+                ImportContactDialog(providedContacts.map { "$it" }.toTypedArray()).show(supportFragmentManager, "")
+            }
         }
     }
 
     private fun checkInput(): Boolean {
+        val regex = Regex("[A-Za-z]+")
+        if (!nameEditText.text.toString().matches(regex)) {
+            Snackbar.make(saveBtn, "Name not valid", Snackbar.LENGTH_SHORT).show()
+            return false
+        }
+        if (!surnameEditText.text.toString().matches(regex)) {
+            Snackbar.make(saveBtn, "Surname not valid", Snackbar.LENGTH_SHORT).show()
+            return false
+        }
         return true
-        // TODO check add contact inputs
     }
 
     private fun addContact() {
         if (!checkInput()) return
 
         ContactsSQLiteDAO.insert(Contact(
-            name = findViewById<EditText>(R.id.edittext_contact_name).text.toString(),
-            surname = findViewById<EditText>(R.id.edittext_contact_surname).text.toString(),
+            name = nameEditText.text.toString(),
+            surname = surnameEditText.text.toString(),
             usernameRef = UserLoginManager.loggedUsername
         ))
         finish()
     }
 
     override fun onContactSelected(index: Int) {
-        findViewById<EditText>(R.id.edittext_contact_name).setText(providedContacts[index].name)
-        findViewById<EditText>(R.id.edittext_contact_surname).setText(providedContacts[index].surname)
-//        TODO("Not yet implemented")
+        nameEditText.setText(providedContacts[index].name)
+        surnameEditText.setText(providedContacts[index].surname)
     }
 
 
@@ -83,7 +105,6 @@ class AddContactActivity : AppCompatActivity(), ImportContactDialog.ContactSelec
                 providedContacts.add(Contact(surname = getString(0), name = getString(1)))
                 moveToNext()
             }
-            close()
         }
     }
 
