@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.cito.youoweme.data.model.Contact
 import com.cito.youoweme.data.model.Transaction
@@ -53,14 +52,16 @@ class TransactionDetailsActivity : AppCompatActivity() {
 
         // Displaying the transaction info
         binding.textviewAmount.text = getString(R.string.format_euros, transaction?.amount)
-        binding.textviewContact.text = getString(if (transaction!!.amount >= 0) R.string.message_he_owes_you else R.string.message_you_owe_him, contact.toString())
-        binding.textviewDate.text = getString(R.string.format_date, Date(transaction!!.timeInMillis))
+        binding.textviewContact.text = getString(
+            if (transaction!!.amount >= 0) R.string.message_he_owes_you else R.string.message_you_owe_him,
+            contact.toString()
+        )
+        binding.textviewDate.text =
+            getString(R.string.format_date, Date(transaction!!.timeInMillis))
         binding.textviewTitle.text = "${transaction?.title}"
         binding.textviewDesc.text = "${transaction?.desc}"
 
-        if (UserLoginManager.loggedUser == null) {
-            binding.btnNotify.isEnabled = false
-        }
+        binding.btnNotify.isEnabled = UserLoginManager.isLogged
 
         // Instantiating the Pickers
         val timePickerDialog = TimePickerDialog(
@@ -91,7 +92,7 @@ class TransactionDetailsActivity : AppCompatActivity() {
         // Listeners
         binding.btnNotify.setOnClickListener {
 //            Snackbar.make(it, "Not yet implemented", Snackbar.LENGTH_SHORT).show()
-            scheduleNotification() // datePickerDialog.show()
+            datePickerDialog.show()
         }
 
         binding.btnDelete.setOnClickListener {
@@ -104,27 +105,35 @@ class TransactionDetailsActivity : AppCompatActivity() {
     private fun scheduleNotification() {
         (getSystemService(Context.ALARM_SERVICE) as AlarmManager).set(
             AlarmManager.RTC_WAKEUP,
-//            notifScheduleCalendar.timeInMillis,
-            Calendar.getInstance().timeInMillis + 5*1000,
+            notifScheduleCalendar.timeInMillis + 5 * 1000,
+//            Calendar.getInstance().timeInMillis + 5 * 1000,
             PendingIntent.getBroadcast(
                 this,
                 "${UserLoginManager.loggedUsername}:${transaction!!.id}".hashCode(),
                 Intent(this, RememberNotificationBroadcastReceiver::class.java).apply {
-                    putExtra(RememberNotificationBroadcastReceiver.NOTIFICATION_ID_EXTRA, transaction?.id)
-                    putExtra(RememberNotificationBroadcastReceiver.NOTIFICATION_TITLE_EXTRA,
-                        "${transaction?.title}: ${getString(R.string.format_euros, transaction?.amount)}"
+                    putExtra(
+                        RememberNotificationBroadcastReceiver.NOTIFICATION_ID_EXTRA,
+                        transaction?.id
                     )
-                    putExtra(RememberNotificationBroadcastReceiver.NOTIFICATION_TEXT_EXTRA,
+                    putExtra(
+                        RememberNotificationBroadcastReceiver.NOTIFICATION_TITLE_EXTRA,
+                        "${transaction?.title}: ${
+                            getString(
+                                R.string.format_euros,
+                                transaction?.amount
+                            )
+                        }"
+                    )
+                    putExtra(
+                        RememberNotificationBroadcastReceiver.NOTIFICATION_TEXT_EXTRA,
                         getString(
                             if (transaction!!.amount >= 0) R.string.message_he_owes_you else R.string.message_you_owe_him,
                             contact.toString()
                         )
                     )
                 },
-                (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                    PendingIntent.FLAG_IMMUTABLE
-                else 0) or
-                PendingIntent.FLAG_ONE_SHOT
+                PendingIntent.FLAG_ONE_SHOT or
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
             )
         )
 

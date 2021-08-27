@@ -12,6 +12,7 @@ import com.cito.youoweme.data.model.Contact
 import com.cito.youoweme.data.model.Transaction
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
+import com.cito.youoweme.utils.quickToast
 import com.google.android.material.appbar.AppBarLayout
 
 class ContactBalanceActivity : AppCompatActivity() {
@@ -46,7 +47,7 @@ class ContactBalanceActivity : AppCompatActivity() {
         contact?.balance = intent.getFloatExtra(CONTACT_BALANCE_EXTRA, 0f)
 
         if (contact == null) {
-            Toast.makeText(this, "Contact not found", Toast.LENGTH_SHORT).show()
+            quickToast(this, "Contact not found")
             finish()
             return
         }
@@ -56,9 +57,9 @@ class ContactBalanceActivity : AppCompatActivity() {
 //        if (supportActionBar == null)
 //            Log.d(this::class.simpleName, "nope")
         supportActionBar?.apply {
-            Log.d(this::class.simpleName, "onCreate")
+//            Log.d(this::class.simpleName, "onCreate")
             setDisplayShowTitleEnabled(true)
-            title = "$contact: €${contact?.balance}".also { Log.d(this::class.simpleName, it) }
+            title = "$contact: €${contact?.balance}"//.also { Log.d(this::class.simpleName, it) }
         }
 
         findViewById<RecyclerView>(R.id.recycler_transactions_list).apply {

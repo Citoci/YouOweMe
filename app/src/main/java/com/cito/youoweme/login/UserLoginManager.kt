@@ -17,6 +17,7 @@ class UserLoginManager(val context: Context) {
 
         var loggedUser: User? = null
         val loggedUsername get() = loggedUser?.username
+        val isLogged = loggedUser != null
 //    private const val LOGGED_AS_GUEST_KEY = "com.cito.youoweme.login.UsersManager.LOGGED_AS_GUEST_KEY"
     }
 

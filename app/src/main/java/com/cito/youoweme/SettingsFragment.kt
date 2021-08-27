@@ -27,7 +27,7 @@ class SettingsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val fragView = inflater.inflate(
-            if (UserLoginManager.loggedUser != null) R.layout.fragment_settings else R.layout.fragment_settings_guest,
+            if (UserLoginManager.isLogged) R.layout.fragment_settings else R.layout.fragment_settings_guest,
             container, false
         )
 
@@ -46,7 +46,7 @@ class SettingsFragment : Fragment() {
         }
 
         with(fragView.findViewById<Button>(R.id.notification_settings_btn)) {
-            this.setOnClickListener {
+            this?.setOnClickListener {
                 openSystemNotificationSettings()
             }
         }
