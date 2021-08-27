@@ -2,6 +2,7 @@ package com.cito.youoweme.utils
 
 import android.app.Application
 import android.content.Context
+import android.widget.Toast
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.login.UserLoginManager
@@ -31,4 +32,8 @@ class YomApplication : Application() {
 
         super.onTerminate()
     }
+}
+
+public fun quickToast(context: Context?, text: CharSequence) {
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
