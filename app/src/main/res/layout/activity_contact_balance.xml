@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="200dp"
         android:fitsSystemWindows="true"
         android:theme="@style/Theme.YouOweMe.AppBarOverlay">
 
@@ -30,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:title="@string/title_contact_balance"
                 app:popupTheme="@style/Theme.YouOweMe.PopupOverlay">
 
 
@@ -40,17 +39,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header_contact_balance"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:minHeight="400dp"
-        android:padding="8dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:visibility="gone" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_delete_contact"
+        style="@style/RedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/ic_outline_delete_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_transactions_list"
@@ -58,6 +55,6 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/transaction_entry" />
+        tools:listitem="@layout/entry_transaction" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

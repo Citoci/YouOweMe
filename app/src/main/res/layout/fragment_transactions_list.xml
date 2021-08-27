@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".TransactionsListFragment"
-        tools:listitem="@layout/transaction_entry" />
+        tools:listitem="@layout/entry_transaction" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_transaction"

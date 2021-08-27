@@ -2,6 +2,7 @@ package com.cito.youoweme
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -18,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        if (UserLoginManager.loggedUser != null) {
+        if (UserLoginManager.isLogged) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

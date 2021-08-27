@@ -3,13 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/drawable/ic_outline_delete_24.xml" value="0.18703703703703703" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout-land/activity_add_contact.xml" value="0.1564102564102564" />
-        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout-land/activity_transaction_details.xml" value="0.4322916666666667" />
+        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout-land/activity_transaction_details.xml" value="0.15512820512820513" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_add_contact.xml" value="0.19957264957264959" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_add_transaction.xml" value="0.2601010101010101" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_contact_balance.xml" value="0.30625" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_login.xml" value="0.21752136752136753" />
+        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_main.xml" value="0.29743589743589743" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/activity_transaction_details.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/entry_contact_balance.xml" value="0.19957264957264959" />
+        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/entry_transaction.xml" value="0.19957264957264959" />
+        <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/fragment_contact_balances_list.xml" value="0.19957264957264959" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/fragment_settings.xml" value="0.2141025641025641" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/fragment_settings_guest.xml" value="0.36102564102564105" />
         <entry key="..\:/Users/Claudio/Projects/AndroidStudioProjects/YouOweMe/app/src/main/res/layout/fragment_transactions_list.xml" value="0.36666666666666664" />

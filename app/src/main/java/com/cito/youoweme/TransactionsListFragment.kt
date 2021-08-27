@@ -16,7 +16,7 @@ import com.cito.youoweme.data.model.Transaction
 import com.cito.youoweme.data.model.euros
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
-import com.cito.youoweme.databinding.TransactionEntryBinding
+import com.cito.youoweme.databinding.EntryTransactionBinding
 import com.cito.youoweme.login.UserLoginManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -74,7 +74,7 @@ class TransactionsListFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
             return TransactionViewHolder(
-                TransactionEntryBinding.inflate(
+                EntryTransactionBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
@@ -106,7 +106,7 @@ class TransactionsListFragment : Fragment() {
 
         override fun getItemCount(): Int = transactions.size
 
-        inner class TransactionViewHolder(binding: TransactionEntryBinding) :
+        inner class TransactionViewHolder(binding: EntryTransactionBinding) :
             RecyclerView.ViewHolder(binding.root) {
 
 //            val contentView: TextView = binding.textviewTransactionEntry

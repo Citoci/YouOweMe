@@ -38,9 +38,9 @@
 
         <Button
             android:id="@+id/btn_logout"
+            style="@style/RedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/red_delete"
             android:text="@string/action_logout"
             app:icon="@drawable/ic_baseline_exit_to_app_24"
             app:iconGravity="textStart"

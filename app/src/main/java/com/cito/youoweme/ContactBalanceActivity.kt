@@ -14,6 +14,7 @@ import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.utils.quickToast
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ContactBalanceActivity : AppCompatActivity() {
 
@@ -52,8 +53,6 @@ class ContactBalanceActivity : AppCompatActivity() {
             return
         }
 
-        transactions = TransactionsSQLiteDAO.getAll()?.filter { it.contactId == contact?.id }
-
 //        if (supportActionBar == null)
 //            Log.d(this::class.simpleName, "nope")
         supportActionBar?.apply {
@@ -64,11 +63,11 @@ class ContactBalanceActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.recycler_transactions_list).apply {
             layoutManager = LinearLayoutManager(this@ContactBalanceActivity)
-            adapter =
-                TransactionsListFragment.TransactionsRecyclerViewAdapter(
-                    transactions ?: listOf()
-//                    mutableListOf<Transaction>().apply { transactions?.forEach { t -> repeat(7) { add(t) } }}
-                )
+//            adapter =
+//                TransactionsListFragment.TransactionsRecyclerViewAdapter(
+//                    transactions ?: listOf()
+////                    mutableListOf<Transaction>().apply { transactions?.forEach { t -> repeat(7) { add(t) } }}
+//                )
             addItemDecoration(
                 DividerItemDecoration(
                     this@ContactBalanceActivity,
@@ -77,6 +76,28 @@ class ContactBalanceActivity : AppCompatActivity() {
             )
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        transactions = TransactionsSQLiteDAO.getAll()?.filter { it.contactId == contact?.id }
+
+        findViewById<RecyclerView>(R.id.recycler_transactions_list).adapter = TransactionsListFragment.TransactionsRecyclerViewAdapter(
+            transactions ?: listOf()
+//                    mutableListOf<Transaction>().apply { transactions?.forEach { t -> repeat(7) { add(t) } }}
+        )
+
+        findViewById<FloatingActionButton>(R.id.fab_delete_contact).apply {
+            (transactions?.isEmpty() ?: false).let {
+                isEnabled = it
+                if (it) show() else hide()
+            }
+            setOnClickListener {
+                ContactsSQLiteDAO.delete(contact!!)
+                finish()
+            }
+        }
     }
 
 

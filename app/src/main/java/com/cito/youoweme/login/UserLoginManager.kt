@@ -17,7 +17,7 @@ class UserLoginManager(val context: Context) {
 
         var loggedUser: User? = null
         val loggedUsername get() = loggedUser?.username
-        val isLogged = loggedUser != null
+        val isLogged get() = loggedUser != null
 //    private const val LOGGED_AS_GUEST_KEY = "com.cito.youoweme.login.UsersManager.LOGGED_AS_GUEST_KEY"
     }
 
@@ -74,6 +74,7 @@ class UserLoginManager(val context: Context) {
         }
         UsersSQLiteDAO.close()
         loggedUser = User(username, passwdHash)
+        Log.d(this::class.simpleName, "$loggedUser")
         storeLogin()
         return true
     }

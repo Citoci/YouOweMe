@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -32,7 +34,7 @@ import com.cito.youoweme.ui.theme.YouOweMeTheme
 // NOW WITH JETPACK COMPOSE!!
 class ContactsBalancesListFragment : Fragment() {
 
-    private var contacts = listOf<Contact>()
+    private var contacts: MutableState<List<Contact>>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +45,8 @@ class ContactsBalancesListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 YouOweMeTheme {
-                    PerContactBalancesList(contacts)
+                    contacts = remember { mutableStateOf(listOf()) }
+                    PerContactBalancesList(contacts!!)
                 }
             }
         }
@@ -55,41 +58,6 @@ class ContactsBalancesListFragment : Fragment() {
         updateContacts()
     }
 
-    @Composable
-    fun PerContactBalancesList(contacts: List<Contact>) {
-        LazyColumn {
-            items(
-                items = contacts,
-                key = { it.id ?: -1 }
-            ) {
-                ContactBalance(it)
-                Divider(color = Color.LightGray)
-            }
-        }
-    }
-
-    @Preview(showBackground = true)
-    @Composable
-    fun ContactBalance(contact: Contact = Contact(null, "Mario", "Rossi", 5f)) {
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                startActivity(Intent(context, ContactBalanceActivity::class.java).apply {
-                    putExtra(ContactBalanceActivity.CONTACT_ID_EXTRA, contact.id)
-                    putExtra(ContactBalanceActivity.CONTACT_BALANCE_EXTRA, contact.balance ?: 0f)
-                })
-            }
-            .padding(16.dp)) {
-            Text(
-                text = contact.toString(), fontSize = 24.sp,
-                modifier = Modifier.weight(1f)
-            )
-            Text(
-                text = stringResource(R.string.format_euros, contact.balance ?: 0),
-                fontSize = 24.sp
-            )
-        }
-    }
 
 //    override fun onResume() {
 //        super.onResume()
@@ -108,7 +76,7 @@ class ContactsBalancesListFragment : Fragment() {
 //    }
 
     private fun updateContacts() {
-        contacts = ContactsSQLiteDAO.getAll()?.filter { it.usernameRef == UserLoginManager.loggedUsername }?.apply {
+        contacts?.value = ContactsSQLiteDAO.getAll()?.filter { it.usernameRef == UserLoginManager.loggedUsername }?.apply {
             TransactionsSQLiteDAO.getAll()?.let { transactions ->
                 this.forEach { contact ->
                     contact.calculateBalance(transactions)
@@ -150,4 +118,43 @@ class ContactsBalancesListFragment : Fragment() {
 //
 //    }
 
+
+    @Composable
+    fun PerContactBalancesList(contacts: MutableState<List<Contact>>) {
+        LazyColumn {
+            items(
+                items = contacts.value,
+                key = { it.id ?: -1 }
+            ) {
+                ContactBalance(it)
+                Divider(color = Color.LightGray)
+            }
+        }
+    }
+
+    @Preview(showBackground = true)
+    @Composable
+    fun ContactBalance(contact: Contact = Contact(null, "Mario", "Rossi", 5f)) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                startActivity(Intent(context, ContactBalanceActivity::class.java).apply {
+                    putExtra(ContactBalanceActivity.CONTACT_ID_EXTRA, contact.id)
+                    putExtra(ContactBalanceActivity.CONTACT_BALANCE_EXTRA, contact.balance ?: 0f)
+                })
+            }
+            .padding(16.dp)) {
+            Text(
+                text = contact.toString(), fontSize = 24.sp,
+                modifier = Modifier.weight(1f),
+                color = MaterialTheme.colors.onBackground,
+            )
+            Text(
+                text = stringResource(R.string.format_euros, contact.balance ?: 0),
+                fontSize = 24.sp,
+                color = MaterialTheme.colors.onBackground,
+            )
+        }
+    }
 }
+

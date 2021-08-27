@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="primaryColor">#1de9b6</color>
+    <color name="primaryLightColor">#6effe8</color>
+    <color name="primaryDarkColor">#00b686</color>
+    <color name="secondaryColor">#00e676</color>
+    <color name="secondaryLightColor">#66ffa6</color>
+    <color name="secondaryDarkColor">#00b248</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
+
+<!--    <color name="purple_200">#FFBB86FC</color>-->
+<!--    <color name="purple_500">#FF6200EE</color>-->
+<!--    <color name="purple_700">#FF3700B3</color>-->
+<!--    <color name="teal_200">#FF03DAC5</color>-->
+<!--    <color name="teal_700">#FF018786</color>-->
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="yom_green">#00897B</color>
-    <color name="yom_green_alt">#00695C</color>
+<!--    <color name="yom_green">#00E676</color>-->
+<!--    <color name="yom_green_alt">#1DE9B6</color>-->
 
-    <color name="red_delete">#D32F2F</color>
+    <color name="red_delete">#ef5350</color>
 
     <color name="credit">#43A047</color>
 </resources>

@@ -9,9 +9,9 @@
 
     <Button
         android:id="@+id/btn_delete"
+        style="@style/RedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/red_delete"
         android:text="@string/action_delete"
         app:icon="@drawable/ic_outline_delete_24"
         app:iconGravity="textStart"
