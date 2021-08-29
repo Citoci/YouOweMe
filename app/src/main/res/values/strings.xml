@@ -1,13 +1,12 @@
 <resources>
-    <string name="app_name">You Owe Me</string>
+    <string name="app_name" translatable="false">You Owe Me</string>
 
     <string name="notification_channel_name_remember">Remember</string>
 
     <string name="format_euros" translatable="false">€%.2f</string>
     <string name="format_date">%tD</string> <!--    in italian will be %td/%tm/%tY -->
 
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_home">Home</string>
+    <string name="title_home" translatable="false">Home</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_contact_balance">Contact Balance</string>
     <string name="title_contact_import_dialog">Select a Contact to import</string>
@@ -39,7 +38,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_import_contact">Import Contact from device</string>
     <string name="action_login" translatable="false">Login</string>
-    <string name="action_logout" translatable="false">Logout</string>
+    <string name="action_logout">Logout</string>
     <string name="action_open_notification_settings">Open Notification Settings</string>
     <string name="action_register">Register</string>
     <string name="action_remember_me">Remember Me</string>

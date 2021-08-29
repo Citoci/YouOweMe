@@ -128,7 +128,7 @@ class RegistrationActivity : AppCompatActivity() {
                     Button(modifier = modifier,
                         onClick = this@RegistrationActivity::registerBtnClick
                     ) {
-                        Text(text = "Register")
+                        Text(text = stringResource(id = R.string.action_register))
                     }
                 }
             }
