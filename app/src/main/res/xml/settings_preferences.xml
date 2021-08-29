@@ -2,24 +2,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <PreferenceCategory app:title="@string/title_contacts">
+    <PreferenceCategory app:title="@string/title_contacts"
+        app:iconSpaceReserved="false">
 
         <Preference
-            app:key="import_contacts_preference"
-            app:title="@string/action_add_contact"/>
+            app:key="add_contacts_preference"
+            app:title="@string/action_add_contact"
+            app:icon="@drawable/ic_baseline_person_add_24"/>
 
         <Preference
             app:key="clean_contacts_preference"
             app:title="@string/action_clean_contacts"
-            android:summary="@string/action_clean_contacts_details"/>
+            android:summary="@string/action_clean_contacts_details"
+            app:icon="@drawable/ic_outline_delete_sweep_24"/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/title_notifications">
+    <PreferenceCategory app:title="@string/title_notifications"
+        app:iconSpaceReserved="false">
 
         <Preference
             app:key="notifications_settings_preference"
-            app:title="@string/action_open_notification_settings">
+            app:title="@string/action_open_notification_settings"
+            android:icon="@drawable/ic_outline_notifications_24">
         </Preference>
 
 <!--        <EditTextPreference-->
