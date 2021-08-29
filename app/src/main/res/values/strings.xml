@@ -1,6 +1,35 @@
 <resources>
     <string name="app_name">You Owe Me</string>
 
+    <string name="notification_channel_name_remember">Remember</string>
+
+    <string name="format_euros" translatable="false">€%.2f</string>
+    <string name="format_date">%tD</string> <!--    in italian will be %td/%tm/%tY -->
+
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Home</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_contact_balance">Contact Balance</string>
+    <string name="title_contact_import_dialog">Select a Contact to import</string>
+    <string name="title_contacts">Contacts</string>
+    <string name="title_contacts_balances">Contacts Balances</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_transaction_details">Transaction Details</string>
+    <string name="title_transactions_list">Transactions List</string>
+
+    <string name="amount">Amount</string>
+    <string name="contact">Contact</string>
+    <string name="credit">Credit</string>
+    <string name="date">Date</string>
+    <string name="debt">Debt</string>
+    <string name="description">Description</string>
+    <string name="name">Name</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="surname">Surname</string>
+    <string name="title">Title</string>
+    <string name="transaction">Transaction</string>
+    <string name="username" translatable="false">Username</string>
+
     <string name="action_add_contact">Add Contact</string>
     <string name="action_add_transaction">Add Transaction</string>
     <string name="action_cancel">Cancel</string>
@@ -18,12 +47,14 @@
     <string name="action_skip">Skip</string>
 
     <string name="label_not_yet_registered">Not Registered Yet?</string>
+    <string name="label_password_confirm">Password Confirm</string>
 
     <string name="message_amount_format_error">The Amount is not formatted correctly</string>
     <string name="message_contact_selection_error">The contact is not properly selected</string>
     <string name="message_clean_contacts_confirm">Are you sure to delete all the contacts you have no more transactions with?</string>
     <string name="message_contacts_cleaned">Contacts cleaned!</string>
     <string name="message_credit_debt_selection_error">You didn\'t select any of "Credit" or "Debt"</string>
+    <string name="message_delete_transactions_first">To delete this contact, you need to delete all the related transactions first</string>
     <string name="message_hello_login">Hi %s!</string>
     <string name="message_he_owes_you">\"%s\" owes you the amount</string>
     <string name="message_notification_scheduled">Notification scheduled for</string>
@@ -36,57 +67,5 @@
     <string name="message_wrong_credentials">Wrong Credentials</string>
     <string name="message_you_owe_him">You owe the amount to \"%s\"</string>
     <string name="message_you_are_not_logged">You are not logged in!\nSome features are not available</string>
-
-    <string name="notification_channel_name_remember">Remember</string>
-
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_home">Home</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_contact_balance">Contact Balance</string>
-    <string name="title_contact_import_dialog">Select a Contact to import</string>
-    <string name="title_contacts">Contacts</string>
-    <string name="title_contacts_balances">Contacts Balances</string>
-    <string name="title_settings">Settings</string>
-    <string name="title_transaction_details">Transaction Details</string>
-    <string name="title_transactions_list">Transactions List</string>
-
-    <string name="word_amount">Amount</string>
-    <string name="word_contact">Contact</string>
-    <string name="word_credit">Credit</string>
-    <string name="word_date">Date</string>
-    <string name="word_debt">Debt</string>
-    <string name="word_description">Description</string>
-    <string name="word_name">Name</string>
-    <string name="word_password" translatable="false">Password</string>
-    <string name="word_password_confirm">Password Confirm</string>
-    <string name="word_surname">Surname</string>
-    <string name="word_title">Title</string>
-    <string name="word_transaction">Transaction</string>
-    <string name="word_username" translatable="false">Username</string>
-
-    <string name="format_euros" translatable="false">€%.2f</string>
-    <string name="format_date">%tD</string> <!--    in italian will be %td/%tm/%tY -->
-
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="title_activity_tab">TabActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="notification_remember_channel_name">Remember</string>
-    <string name="message_delete_transactions_first">To delete this contact, you need to delete all the related transactions first</string>
 
 </resources>

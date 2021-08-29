@@ -110,7 +110,7 @@ class RegistrationActivity : AppCompatActivity() {
                     OutlinedTextField(
                         value = passwordInput.value,
                         onValueChange = { passwordInput.value = it; passwordIn = it },
-                        label = { Text(text = stringResource(R.string.word_password)) },
+                        label = { Text(text = stringResource(R.string.password)) },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = modifier.padding(top = 8.dp),
@@ -118,7 +118,7 @@ class RegistrationActivity : AppCompatActivity() {
                     OutlinedTextField(
                         value = passwordConfirmInput.value,
                         onValueChange = { passwordConfirmInput.value = it; passwordConfirmIn = it },
-                        label = { Text(text = stringResource(R.string.word_password_confirm))},
+                        label = { Text(text = stringResource(R.string.label_password_confirm))},
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = modifier.padding(top = 8.dp),

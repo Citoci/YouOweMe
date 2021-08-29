@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="@string/word_amount"
+            android:hint="@string/amount"
             android:importantForAutofill="no"
             android:inputType="numberSigned|numberDecimal"
             android:minHeight="48dp"
@@ -53,14 +53,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="@string/word_credit" />
+                android:text="@string/credit" />
 
             <RadioButton
                 android:id="@+id/radio_debt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/word_debt" />
+                android:text="@string/debt" />
         </RadioGroup>
 
         <DatePicker
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:hint="@string/word_title"
+            android:hint="@string/title"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:minHeight="48dp"
@@ -96,7 +96,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:ems="10"
-            android:hint="@string/word_description"
+            android:hint="@string/description"
             android:importantForAutofill="no"
             android:inputType="textMultiLine|textPersonName|textImeMultiLine"
             android:minLines="3"
@@ -121,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/word_contact"
+            android:text="@string/contact"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edittext_amount" />
@@ -145,7 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/word_date"
+            android:text="@string/date"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroup" />

@@ -8,7 +8,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cito.youoweme.R
@@ -30,7 +29,7 @@ class RememberNotificationBroadcastReceiver : BroadcastReceiver() {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
                     NotificationsUtils.REMEMBER_CHANNEL_ID,
-                    context.getString(R.string.notification_remember_channel_name),
+                    context.getString(R.string.notification_channel_name_remember),
                     NotificationManager.IMPORTANCE_DEFAULT
                 )
             )
