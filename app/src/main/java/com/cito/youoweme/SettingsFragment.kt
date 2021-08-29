@@ -1,21 +1,16 @@
 package com.cito.youoweme
 
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.cito.youoweme.login.UserLoginManager
 
 class SettingsFragment : Fragment() {
@@ -31,8 +26,8 @@ class SettingsFragment : Fragment() {
             container, false
         )
 
-        with(fragView.findViewById<TextView>(R.id.profile_username_text)) {
-            this?.append(" \"" + (UserLoginManager.loggedUser?.username ?: "guest") + "\"")
+        fragView.findViewById<TextView>(R.id.profile_username_text)?.apply {
+            text = getString(R.string.message_hello_login, UserLoginManager.loggedUsername)
         }
 
         with(fragView.findViewById<Button>(R.id.btn_logout)) {
@@ -45,26 +40,27 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        with(fragView.findViewById<Button>(R.id.notification_settings_btn)) {
-            this?.setOnClickListener {
-                openSystemNotificationSettings()
-            }
-        }
-
         return fragView
     }
 
-    private fun openSystemNotificationSettings() {
-        startActivity(
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-                    putExtra(Settings.EXTRA_APP_PACKAGE, context?.packageName)
+    class PreferencesFragment : PreferenceFragmentCompat() {
+
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.settings_preferences, rootKey)
+
+            findPreference<Preference>("notifications_settings_preference")?.intent =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                        putExtra(Settings.EXTRA_APP_PACKAGE, context?.packageName)
+                    }
+                } else Intent("android.settings.APP_NOTIFICATION_SETTINGS").apply {
+                    putExtra("app_package", context?.packageName)
+                    putExtra("app_uid", context?.applicationInfo?.uid)
                 }
-            } else Intent("android.settings.APP_NOTIFICATION_SETTINGS").apply {
-                putExtra("app_package", context?.packageName)
-                putExtra("app_uid", context?.applicationInfo?.uid)
-            }
-        )
+
+            findPreference<Preference>("import_contacts_preference")?.intent =
+                Intent(activity, AddContactActivity::class.java)
+        }
     }
 
 }

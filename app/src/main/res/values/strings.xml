@@ -4,10 +4,13 @@
     <string name="action_add_contact">Add Contact</string>
     <string name="action_add_transaction">Add Transaction</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_clean_contacts">Clean Contacts</string>
+    <string name="action_clean_contacts_details">Delete contacts you have no pending transactions with</string>
     <string name="action_delete">Delete</string>
     <string name="action_import_contact">Import Contact from device</string>
     <string name="action_login" translatable="false">Login</string>
     <string name="action_logout" translatable="false">Logout</string>
+    <string name="action_open_notification_settings">Open Notification Settings</string>
     <string name="action_register">Register</string>
     <string name="action_remember_me">Remember Me</string>
     <string name="action_save">Save</string>
@@ -18,7 +21,7 @@
     <string name="message_amount_format_error">The Amount is not formatted correctly</string>
     <string name="message_contact_selection_error">The contact is not properly selected</string>
     <string name="message_credit_debt_selection_error">You didn\'t select any of "Credit" or "Debt"</string>
-    <string name="message_hello_login">Hi! You logged in as </string>
+    <string name="message_hello_login">Hi %s!</string>
     <string name="message_he_owes_you">\"%s\" owes you the amount</string>
     <string name="message_notification_scheduled">Notification scheduled for</string>
     <string name="message_password_invalid">The Password you inserted not valid</string>
@@ -38,6 +41,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_contact_balance">Contact Balance</string>
     <string name="title_contact_import_dialog">Select a Contact to import</string>
+    <string name="title_contacts">Contacts</string>
     <string name="title_contacts_balances">Contacts Balances</string>
     <string name="title_settings">Settings</string>
     <string name="title_transaction_details">Transaction Details</string>
@@ -80,5 +84,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="notification_remember_channel_name">Remember</string>
+    <string name="message_delete_transactions_first">To delete this contact, you need to delete all the related transactions first</string>
 
 </resources>

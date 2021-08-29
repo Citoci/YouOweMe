@@ -24,4 +24,6 @@
     <color name="red_delete">#ef5350</color>
 
     <color name="credit">#43A047</color>
+
+    <color name="grey_disabled">#959595</color>
 </resources>

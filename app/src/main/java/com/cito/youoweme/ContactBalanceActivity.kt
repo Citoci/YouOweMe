@@ -1,9 +1,12 @@
 package com.cito.youoweme
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.motion.widget.Debug
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,7 @@ import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.utils.quickToast
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class ContactBalanceActivity : AppCompatActivity() {
 
@@ -58,7 +62,8 @@ class ContactBalanceActivity : AppCompatActivity() {
         supportActionBar?.apply {
 //            Log.d(this::class.simpleName, "onCreate")
             setDisplayShowTitleEnabled(true)
-            title = "$contact: €${contact?.balance}"//.also { Log.d(this::class.simpleName, it) }
+            title = "$contact:"//.also { Log.d(this::class.simpleName, it) }
+//            setDisplayHomeAsUpEnabled(true)
         }
 
         findViewById<RecyclerView>(R.id.recycler_transactions_list).apply {
@@ -66,7 +71,6 @@ class ContactBalanceActivity : AppCompatActivity() {
 //            adapter =
 //                TransactionsListFragment.TransactionsRecyclerViewAdapter(
 //                    transactions ?: listOf()
-////                    mutableListOf<Transaction>().apply { transactions?.forEach { t -> repeat(7) { add(t) } }}
 //                )
             addItemDecoration(
                 DividerItemDecoration(
@@ -81,21 +85,29 @@ class ContactBalanceActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        findViewById<TextView>(R.id.txt_balance).text = getString(R.string.format_euros, contact?.balance)
+
         transactions = TransactionsSQLiteDAO.getAll()?.filter { it.contactId == contact?.id }
 
-        findViewById<RecyclerView>(R.id.recycler_transactions_list).adapter = TransactionsListFragment.TransactionsRecyclerViewAdapter(
+        findViewById<RecyclerView>(R.id.recycler_transactions_list).adapter =
+            TransactionsListFragment.TransactionsRecyclerViewAdapter(
             transactions ?: listOf()
 //                    mutableListOf<Transaction>().apply { transactions?.forEach { t -> repeat(7) { add(t) } }}
         )
 
         findViewById<FloatingActionButton>(R.id.fab_delete_contact).apply {
             (transactions?.isEmpty() ?: false).let {
-                isEnabled = it
-                if (it) show() else hide()
-            }
-            setOnClickListener {
-                ContactsSQLiteDAO.delete(contact!!)
-                finish()
+//                isEnabled = it
+//                if (it) show() else hide()
+                if (!it) { backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.grey_disabled)) }
+                setOnClickListener { v ->
+                    if (it) {
+                        ContactsSQLiteDAO.delete(contact!!)
+                        finish()
+                    } else {
+                        Snackbar.make(v, getString(R.string.message_delete_transactions_first), Snackbar.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
