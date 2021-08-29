@@ -8,10 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
+import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.login.UserLoginManager
+import com.cito.youoweme.utils.confirmActionWithDialog
+import com.cito.youoweme.utils.quickToast
 
 class SettingsFragment : Fragment() {
 
@@ -58,8 +63,24 @@ class SettingsFragment : Fragment() {
                     putExtra("app_uid", context?.applicationInfo?.uid)
                 }
 
-            findPreference<Preference>("import_contacts_preference")?.intent =
+            findPreference<Preference>("add_contacts_preference")?.intent =
                 Intent(activity, AddContactActivity::class.java)
+
+            findPreference<Preference>("clean_contacts_preference")?.setOnPreferenceClickListener { preference ->
+                confirmActionWithDialog(
+                    requireContext(),
+                    getString(R.string.action_clean_contacts),
+                    getString(R.string.message_clean_contacts_confirm)) {
+
+                    val allTransactions = TransactionsSQLiteDAO.getAll() ?: return@confirmActionWithDialog
+                    val allContacts = ContactsSQLiteDAO.getAll() ?: return@confirmActionWithDialog
+                    allContacts
+                        .filter { contact -> ! allTransactions.any { it.contactId == contact.id  } }
+                        .forEach { ContactsSQLiteDAO.delete(it) }
+                    quickToast(requireContext(), getString(R.string.message_contacts_cleaned))
+                }
+                true
+            }
         }
     }
 
