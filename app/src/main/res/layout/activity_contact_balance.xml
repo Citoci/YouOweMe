@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="240dp"
         android:fitsSystemWindows="true"
         android:theme="@style/Theme.YouOweMe.AppBarOverlay">
 
@@ -30,20 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/Theme.YouOweMe.PopupOverlay">
-
-
-            </androidx.appcompat.widget.Toolbar>
-
-            <TextView
-                android:id="@+id/txt_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="16dp"
-                android:text="balance"
-                android:textSize="34sp"
-                app:layout_collapseMode="parallax" />
+                app:popupTheme="@style/Theme.YouOweMe.PopupOverlay" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -59,6 +46,16 @@
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_outline_delete_24"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.cito.youoweme.ui.FadeableTextView
+        android:id="@+id/txt_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|center_horizontal"
+        android:textSize="34sp"
+        android:translationY="-40dp"
+        android:text="balance"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_transactions_list"
