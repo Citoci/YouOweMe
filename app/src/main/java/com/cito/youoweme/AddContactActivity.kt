@@ -1,25 +1,24 @@
 package com.cito.youoweme
 
-import android.app.Dialog
-import android.database.Cursor
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
 import com.cito.youoweme.data.model.Contact
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.login.UserLoginManager
 import com.google.android.material.snackbar.Snackbar
 
-class AddContactActivity : AppCompatActivity(), ImportContactDialog.ContactSelectorListener, LoaderManager.LoaderCallbacks<Cursor>  {
 
-    private val providedContacts = arrayListOf<Contact>()
+class AddContactActivity :
+    AppCompatActivity() /*, ImportContactDialog.ContactSelectorListener, LoaderManager.LoaderCallbacks<Cursor>*/ {
+
+//    private val providedContacts = arrayListOf<Contact>()
 
     // UI Elements
     private lateinit var nameEditText: EditText
@@ -31,7 +30,7 @@ class AddContactActivity : AppCompatActivity(), ImportContactDialog.ContactSelec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_contact)
 
-        LoaderManager.getInstance(this).initLoader(0, null, this)
+//        LoaderManager.getInstance(this).initLoader(0, null, this)
 
         nameEditText = findViewById(R.id.edittext_contact_name)
         surnameEditText = findViewById(R.id.edittext_contact_surname)
@@ -45,8 +44,58 @@ class AddContactActivity : AppCompatActivity(), ImportContactDialog.ContactSelec
         importBtn.apply {
             isEnabled = UserLoginManager.isLogged
             setOnClickListener {
-                ImportContactDialog(providedContacts.map { "$it" }.toTypedArray()).show(supportFragmentManager, "")
+//                ImportContactDialog(providedContacts.map { "$it" }.toTypedArray()).show(supportFragmentManager, "")
+                startActivityForResult(
+                    Intent(
+                        Intent.ACTION_PICK,
+                        ContactsContract.Contacts.CONTENT_URI
+                    ),
+                    CONTACT_REQUEST_CODE
+                )
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        when (requestCode) {
+            CONTACT_REQUEST_CODE -> {
+                if (resultCode != RESULT_OK) {
+                    Log.d(this::class.simpleName, "contact not selected")
+                    return
+                }
+                intent?.data?.let { uri ->
+//                    Log.d(this::class.simpleName, uri.toString() )
+
+                    var lookup = ""
+                    managedQuery(
+                        uri,
+                        arrayOf(ContactsContract.Contacts.LOOKUP_KEY),
+                        null, null, null
+                    )?.apply {
+                        moveToFirst()
+                        lookup = getString(0)
+//                        close() // do not call with "managedQuery()"
+                    }
+
+                    managedQuery(
+                        ContactsContract.Data.CONTENT_URI,
+                        arrayOf(
+                            ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME,
+                            ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME,
+                        ),
+                        "${ContactsContract.Data.LOOKUP_KEY} = ? AND ${ContactsContract.Data.MIMETYPE} = ?",
+                        arrayOf(lookup, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE),
+                        null
+                    )?.apply {
+                        moveToFirst()
+//                        Log.d(this::class.simpleName, "surname: ${getString(0)}, name: ${getString(1)}")
+                        nameEditText.setText(getString(1))
+                        surnameEditText.setText(getString(0))
+//                        close()
+                    }
+                }
+            }
+            else -> super.onActivityResult(requestCode, resultCode, intent)
         }
     }
 
@@ -66,14 +115,17 @@ class AddContactActivity : AppCompatActivity(), ImportContactDialog.ContactSelec
     private fun addContact() {
         if (!checkInput()) return
 
-        ContactsSQLiteDAO.insert(Contact(
-            name = nameEditText.text.toString(),
-            surname = surnameEditText.text.toString(),
-            usernameRef = UserLoginManager.loggedUsername
-        ))
+        ContactsSQLiteDAO.insert(
+            Contact(
+                name = nameEditText.text.toString(),
+                surname = surnameEditText.text.toString(),
+                usernameRef = UserLoginManager.loggedUsername
+            )
+        )
         finish()
     }
 
+/*
     override fun onContactSelected(index: Int) {
         nameEditText.setText(providedContacts[index].name)
         surnameEditText.setText(providedContacts[index].surname)
@@ -109,10 +161,14 @@ class AddContactActivity : AppCompatActivity(), ImportContactDialog.ContactSelec
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>) { }
+*/
 
-
+    companion object {
+        private const val CONTACT_REQUEST_CODE = 3103
+    }
 }
 
+/*
 class ImportContactDialog(private val contactNames: Array<String>): DialogFragment() {
     private lateinit var listener: ContactSelectorListener
 
@@ -131,3 +187,4 @@ class ImportContactDialog(private val contactNames: Array<String>): DialogFragme
         fun onContactSelected(index: Int)
     }
 }
+*/
