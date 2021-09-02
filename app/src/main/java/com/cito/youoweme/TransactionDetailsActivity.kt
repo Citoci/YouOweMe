@@ -1,6 +1,8 @@
 package com.cito.youoweme
 
 import android.app.*
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -15,7 +17,9 @@ import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.databinding.ActivityTransactionDetailsBinding
 import com.cito.youoweme.login.UserLoginManager
+import com.cito.youoweme.login.model.User
 import com.cito.youoweme.notifications.RememberNotificationBroadcastReceiver
+import com.cito.youoweme.utils.quickToast
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -93,6 +97,22 @@ class TransactionDetailsActivity : AppCompatActivity() {
         binding.btnNotify.setOnClickListener {
 //            Snackbar.make(it, "Not yet implemented", Snackbar.LENGTH_SHORT).show()
             datePickerDialog.show()
+        }
+
+        binding.btnCopyToClipboard.setOnClickListener {
+            (getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(
+                ClipData.newPlainText("",
+                    transaction?.amount?.let {
+                        getString(R.string.text_transaction_exported,
+                            if (it>0) contact else UserLoginManager.loggedUsername,
+                            if (it>0) UserLoginManager.loggedUsername else contact,
+                            getString(R.string.format_euros, transaction?.amount),
+                            transaction?.title
+                        )
+                    }
+                )
+            )
+            quickToast(this, getString(R.string.message_transaction_copied_to_clipboard))
         }
 
         binding.btnDelete.setOnClickListener {

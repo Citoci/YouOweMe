@@ -53,4 +53,7 @@
     <string name="message_you_owe_him">Tu devi l\'importo a \"%s\"</string>
     <string name="message_you_are_not_logged">Non hai effettuato l\'accesso!\nAlcune funzionalità sono disabilitate</string>
     <string name="action_logout">Esci</string>
+    <string name="text_transaction_exported">%s deve a %s la somma di %s per %s</string>
+    <string name="message_transaction_copied_to_clipboard">Operazione copiata come testo negli appunti</string>
+    <string name="action_copy_to_clipboard">Copia negli appunti</string>
 </resources>

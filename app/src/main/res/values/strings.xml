@@ -35,6 +35,7 @@
     <string name="action_clean_contacts">Clean Contacts</string>
     <string name="action_clean_contacts_details">Delete contacts you have no pending transactions with</string>
     <string name="action_confirm">Confirm</string>
+    <string name="action_copy_to_clipboard">Copy to clipboard</string>
     <string name="action_delete">Delete</string>
     <string name="action_import_contact">Import Contact from device</string>
     <string name="action_login" translatable="false">Login</string>
@@ -62,9 +63,12 @@
     <string name="message_remember_notification_title">Remember this</string>
     <string name="message_remember_notification_text">Remember this</string>
     <string name="message_title_not_inserted">Title is empty. Please, specify one</string>
+    <string name="message_transaction_copied_to_clipboard">Transaction copied to clipboard as text</string>
     <string name="message_username_not_valid">The username you inserted is not valid</string>
     <string name="message_wrong_credentials">Wrong Credentials</string>
     <string name="message_you_owe_him">You owe the amount to \"%s\"</string>
     <string name="message_you_are_not_logged">You are not logged in!\nSome features are not available</string>
+
+    <string name="text_transaction_exported">%s owes to %s the amount %s for %s</string>
 
 </resources>

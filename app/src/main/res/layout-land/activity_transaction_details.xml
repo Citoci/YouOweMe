@@ -24,6 +24,7 @@
         android:id="@+id/btn_notify"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:enabled="true"
         android:text="@string/action_remember_me"
@@ -31,6 +32,19 @@
         app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+        app:layout_constraintStart_toEndOf="@+id/btn_copy_to_clipboard" />
+
+    <Button
+        android:id="@+id/btn_copy_to_clipboard"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/action_copy_to_clipboard"
+        app:icon="@drawable/ic_outline_content_copy_24"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_notify"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
