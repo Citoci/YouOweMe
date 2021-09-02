@@ -33,7 +33,7 @@ class AddTransactionActivity : AppCompatActivity() {
             if (!checkInput()) return@setOnClickListener
 
             if (TransactionsSQLiteDAO.insert(Transaction(
-                amount = binding.edittextAmount.text.toString().toFloat() * if (binding.radioDebt.isChecked) -1 else 1,
+                amount = binding.edittextAmount.text.toString().toFloat() * if (binding.radioDebt.isSelected) -1 else 1,
                 contactId = (binding.spinnerContact.selectedItem as Contact).id,
                 timeInMillis = Calendar.getInstance().apply{ with(binding.datePicker){ set(year, month, dayOfMonth) }}.timeInMillis,
                 title = binding.edittextTitle.text.toString().run { if (length > 0) this else null },
@@ -46,6 +46,22 @@ class AddTransactionActivity : AppCompatActivity() {
                 Log.e(AddTransactionActivity::class.simpleName, "Transaction adding failed")
             }
 
+        }
+
+        binding.creditordebtBtnGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            when(checkedId) {
+                R.id.radio_credit -> {
+                    binding.radioCredit.isSelected = isChecked.also {
+                        if (it) binding.radioDebt.isSelected = false
+                    }
+
+                }
+                R.id.radio_debt -> {
+                    binding.radioDebt.isSelected = isChecked
+                    if (isChecked)
+                        binding.radioCredit.isSelected = !isChecked
+                }
+            }
         }
     }
 
@@ -81,7 +97,7 @@ class AddTransactionActivity : AppCompatActivity() {
             Snackbar.make(binding.root, R.string.message_contact_selection_error, Snackbar.LENGTH_SHORT).show()
             return false
         }
-        if (!binding.radioDebt.isChecked && !binding.radioCredit.isChecked) {
+        if (!binding.radioDebt.isSelected && !binding.radioCredit.isSelected) {
             Snackbar.make(binding.root, R.string.message_credit_debt_selection_error, Snackbar.LENGTH_SHORT).show()
             return false
         }
