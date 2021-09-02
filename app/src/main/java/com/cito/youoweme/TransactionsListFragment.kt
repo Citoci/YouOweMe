@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cito.youoweme.data.model.Transaction
-import com.cito.youoweme.data.model.euros
+//import com.cito.youoweme.data.model.euros
 import com.cito.youoweme.data.sql_database.ContactsSQLiteDAO
 import com.cito.youoweme.data.sql_database.TransactionsSQLiteDAO
 import com.cito.youoweme.databinding.EntryTransactionBinding
@@ -52,9 +52,8 @@ class TransactionsListFragment : Fragment() {
         }
     }
 
-    private fun Transaction.isOfLoggedUser(): Boolean {
-        return (ContactsSQLiteDAO.getById(contactId?:return false)?.usernameRef == UserLoginManager.loggedUser?.username)
-    }
+    private fun Transaction.isOfLoggedUser() =
+        contactId?.let { ContactsSQLiteDAO.getById(it)?.usernameRef == UserLoginManager.loggedUsername } ?: false
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -81,12 +80,12 @@ class TransactionsListFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-            // creating an hashmap od the contacts, to get their names efficiently later
+            // creating an hashmap of the contacts, to get their names efficiently later
             val contactNames = ContactsSQLiteDAO.getAll()?.associate { Pair(it.id, it) }
 
             with(holder) {
                 transactions[position].let { t ->
-                    amountView.text = itemView.resources.getString(R.string.format_euros, t.amount.euros())
+                    amountView.text = itemView.resources.getString(R.string.format_euros, t.amount)
                     titleView.text = t.title
                     contactView.text = contactNames?.get(t.contactId)?.toString() ?: "error"// t.contactId?.let { ContactsSQLiteDAO.getById(it)?.toString() } ?: "error"
                     dateView.text = t.formattedDate

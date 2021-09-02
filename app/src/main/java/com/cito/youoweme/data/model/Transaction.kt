@@ -45,4 +45,4 @@ data class Transaction(
 
 }
 
-fun Float.euros(): Float = round(this*100) / 100f
+//fun Float.euros() = round(this*100) / 100f

@@ -25,9 +25,7 @@ class FadeableTextView : AppCompatTextView, CoordinatorLayout.AttachedBehavior {
             parent: CoordinatorLayout,
             child: View,
             dependency: View
-        ) = (dependency is AppBarLayout).also {
-            Log.d(this::class.simpleName, "p: ${parent.tag}, c: ${child.tag}, d: ${dependency.tag}")
-        }
+        ) = (dependency is AppBarLayout)
 //                return super.layoutDependsOn(parent, child, dependency)
 
         override fun onDependentViewChanged(
